@@ -1,55 +1,49 @@
 import * as THREE from "three";
-import { FontLoader, TextGeometry } from "three/examples/jsm/Addons.js";
+import {
+  Font,
+  TextGeometry,
+} from "three/examples/jsm/Addons.js";
 
-const addFloatingTextToScene = async (
-  scene: THREE.Scene,
-  text: string,
-  position: THREE.Vector3
-): Promise<THREE.Mesh> => {
-  return new Promise((resolve, reject) => {
-    const loader = new FontLoader();
-    loader.load(
-      "assets/fonts/Futury_Light_Regular.json",
-      (font) => {
-        const geometry = new TextGeometry(text, {
-          font,
-          size: 1.5,
-          curveSegments: 12,
-          bevelEnabled: true,
-          bevelThickness: 0.03,
-          bevelSize: 0.02,
-          bevelOffset: 0,
-          bevelSegments: 5,
-          depth: 0.1,
-        });
+export default class FloatingText {
+  geometry: TextGeometry;
+  material: THREE.MeshStandardMaterial;
+  textMesh: THREE.Mesh<any, any, THREE.Object3DEventMap>;
+  constructor(text: string, font: Font) {
+    this.geometry = new TextGeometry(text, {
+      font,
+      size: 1,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 0.03,
+      bevelSize: 0.02,
+      bevelOffset: 0,
+      bevelSegments: 5,
+      depth: 0.1,
+    });
 
-        const material = new THREE.MeshStandardMaterial({
-          color: 0xffffff,
-          metalness: 0.3,
-          roughness: 0.3,
-          emissive: 0xffffff,
-          clipShadows: true,
-        });
+    this.material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      metalness: 0.3,
+      roughness: 0.3,
+      emissive: 0xffffff,
+      clipShadows: true,
+    });
 
-        const textMesh = new THREE.Mesh(geometry, material);
-        textMesh.position.copy(position);
+    this.textMesh = new THREE.Mesh(this.geometry, this.material);
+  }
 
-        geometry.computeBoundingBox();
-        const centerOffset = geometry.boundingBox!.getCenter(
-          new THREE.Vector3()
-        );
-        textMesh.position.x -= centerOffset.x;
+  addFloatingTextToScene = (
+    scene: THREE.Scene,
+    position: THREE.Vector3
+  ): void => {
+    this.textMesh.position.copy(position);
 
-        scene.add(textMesh);
-        resolve(textMesh);
-      },
-      () => {},
-      (err) => {
-        console.error("An error occurred when loading the font:", err);
-        reject(err);
-      }
+    this.geometry.computeBoundingBox();
+    const centerOffset = this.geometry.boundingBox!.getCenter(
+      new THREE.Vector3()
     );
-  });
-};
+    this.textMesh.position.x -= centerOffset.x;
 
-export { addFloatingTextToScene };
+    scene.add(this.textMesh);
+  };
+}

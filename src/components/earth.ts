@@ -1,109 +1,127 @@
 import * as THREE from "three";
 
-// Create texture loader
-const textureLoader = new THREE.TextureLoader();
+interface ITextureConfigs {
+  map: string;
+  normalMap: string;
+  specularMap: string;
+  cloudsMap: string;
+}
+interface IEarthTextures {
+  map: THREE.Texture;
+  normalMap: THREE.Texture;
+  specularMap: THREE.Texture;
+  cloudsMap: THREE.Texture;
+}
 
-// Load Earth textures
-const earthTextures = {
-  map: textureLoader.load(
-    "assets/textures/earth_atmos_2048.jpg"
-  ),
-  normalMap: textureLoader.load(
-    "assets/textures/earth_normal_2048.jpg"
-  ),
-  specularMap: textureLoader.load(
-    "assets/textures/earth_specular_2048.jpg"
-  ),
-  cloudsMap: textureLoader.load(
-    "assets/textures/earth_clouds_2048.jpg"
-  ),
-};
+export default class Earth {
+  private earthTextures: IEarthTextures;
+  private radius: number;
+  private segments: number;
+  private earth!: THREE.Mesh;
+  private clouds!: THREE.Mesh;
+  private atmosphere!: THREE.Mesh;
+  private earthGroup!: THREE.Group;
+  constructor(earthMaps: ITextureConfigs, radius: number, segment: number) {
+    const textureLoader = new THREE.TextureLoader();
+    this.earthTextures = {
+      map: textureLoader.load(earthMaps.map),
+      normalMap: textureLoader.load(earthMaps.normalMap),
+      specularMap: textureLoader.load(earthMaps.specularMap),
+      cloudsMap: textureLoader.load(earthMaps.cloudsMap),
+    };
 
-// Earth parameters
-const EARTH_RADIUS = 7;
-const EARTH_SEGMENTS = 64;
+    this.radius = radius;
+    this.segments = segment;
 
-// Create Earth material with advanced properties
-const earthMaterial = new THREE.MeshPhongMaterial({
-  map: earthTextures.map,
-  normalMap: earthTextures.normalMap,
-  specularMap: earthTextures.specularMap,
-  normalScale: new THREE.Vector2(0.05, 0.05),
-  specular: new THREE.Color(0x333333),
-  shininess: 30,
-  bumpScale: 0.05,
-});
+    this.creteEarthMesh();
+    this.createCloudsLayer();
+    this.createAtmosphereGlow();
+    this.createEarthGroup();
+  }
 
-// Create Earth mesh
-const earthGeometry = new THREE.SphereGeometry(
-  EARTH_RADIUS,
-  EARTH_SEGMENTS,
-  EARTH_SEGMENTS
-);
-const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+  private creteEarthMesh() {
+    // Create Earth material with advanced properties
+    const earthMaterial = new THREE.MeshPhongMaterial({
+      map: this.earthTextures.map,
+      normalMap: this.earthTextures.normalMap,
+      specularMap: this.earthTextures.specularMap,
+      normalScale: new THREE.Vector2(0.05, 0.05),
+      specular: new THREE.Color(0x333333),
+      shininess: 30,
+      bumpScale: 0.05,
+    });
 
-// Create clouds layer
-const cloudsGeometry = new THREE.SphereGeometry(
-  EARTH_RADIUS + 0.01,
-  EARTH_SEGMENTS,
-  EARTH_SEGMENTS
-);
-const cloudsMaterial = new THREE.MeshPhongMaterial({
-  map: earthTextures.cloudsMap,
-  transparent: true,
-  opacity: 0.9,
-  blending: THREE.AdditiveBlending,
-});
-const clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+    // Create Earth mesh
+    const earthGeometry = new THREE.SphereGeometry(
+      this.radius,
+      this.segments,
+      this.segments
+    );
+    this.earth = new THREE.Mesh(earthGeometry, earthMaterial);
+  }
 
-// Create atmosphere glow
-const atmosphereGeometry = new THREE.SphereGeometry(
-  EARTH_RADIUS + 0.02,
-  EARTH_SEGMENTS,
-  EARTH_SEGMENTS
-);
-const atmosphereMaterial = new THREE.ShaderMaterial({
-  vertexShader: `
+  private createCloudsLayer() {
+    // Create clouds layer
+    const cloudsGeometry = new THREE.SphereGeometry(
+      this.radius + 0.01,
+      this.segments,
+      this.segments
+    );
+    const cloudsMaterial = new THREE.MeshPhongMaterial({
+      map: this.earthTextures.cloudsMap,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending,
+    });
+    this.clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+  }
+
+  private createAtmosphereGlow() {
+    // Create atmosphere glow
+    const atmosphereGeometry = new THREE.SphereGeometry(
+      this.radius + 0.02,
+      this.segments,
+      this.segments
+    );
+    const atmosphereMaterial = new THREE.ShaderMaterial({
+      vertexShader: `
         varying vec3 vNormal;
         void main() {
             vNormal = normalize(normalMatrix * normal);
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
     `,
-  fragmentShader: `
+      fragmentShader: `
         varying vec3 vNormal;
         void main() {
             float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
             gl_FragColor = vec4(0.3, 0.6, 1.0, 1.0) * intensity;
         }
     `,
-  blending: THREE.AdditiveBlending,
-  side: THREE.BackSide,
-  transparent: true,
-});
-const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
+      transparent: true,
+    });
+    this.atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+  }
 
-// Create Earth group to hold all components
-const earthGroup = new THREE.Group();
-earthGroup.add(earth);
-earthGroup.add(clouds);
-earthGroup.add(atmosphere);
+  private createEarthGroup() {
+    this.earthGroup = new THREE.Group();
+    this.earthGroup.add(this.earth);
+    this.earthGroup.add(this.clouds);
+    this.earthGroup.add(this.atmosphere);
+  }
 
-// Animation function
-function animateEarth(deltaTime: number) {
-  // Rotate Earth
-  earth.rotation.y +=0.1 * deltaTime;
-  // Rotate clouds slightly faster than Earth
-  clouds.rotation.y += 0.12 * deltaTime;
+  // Animation function
+  animateEarth(deltaTime: number) {
+    // Rotate Earth
+    this.earth.rotation.y += 0.1 * deltaTime;
+    // Rotate clouds slightly faster than Earth
+    this.clouds.rotation.y += 0.12 * deltaTime;
+  }
+
+  // Function to add Earth to scene
+  addEarthToScene(scene: THREE.Scene) {
+    scene.add(this.earthGroup);
+  }
 }
-
-// Function to add Earth to scene
-function addEarthToScene(scene: THREE.Scene) {
-  scene.add(earthGroup);
-}
-
-export {
-  earthGroup,
-  addEarthToScene,
-  animateEarth,
-};
