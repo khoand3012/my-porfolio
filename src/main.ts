@@ -1,12 +1,8 @@
-import "./style.css";
 import * as THREE from "three";
-import { Font, FontLoader, OrbitControls } from "three/examples/jsm/Addons.js";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 import GlobeLight from "./components/globeLight";
 import Earth from "./components/earth";
-import Star from "./components/star";
-import FloatingText from "./components/floatingText";
-
-const NUM_OF_STARS = 200;
+import ProgressBarManager from "./utils/progressBarManager";
 
 class Main {
   scene!: THREE.Scene;
@@ -38,46 +34,29 @@ class Main {
     this.camera.position.setZ(30);
 
     const globeLight = new GlobeLight(
-      new THREE.DirectionalLight(0xffffff, 3),
-      [5, 3, 4.5],
+      new THREE.DirectionalLight(0xffffff, 1.3),
+      [-100, 0, 50],
       new THREE.AmbientLight(0x404040, 0.8)
     );
     globeLight.addLightToScene(this.scene);
-    this.earth = new Earth(
-      {
-        map: "assets/textures/earth_atmos_2048.jpg",
-        normalMap: "assets/textures/earth_normal_2048.jpg",
-        specularMap: "assets/textures/earth_specular_2048.jpg",
-        cloudsMap: "assets/textures/earth_clouds_2048.jpg",
-      },
-      7,
-      64
+
+    const progressBarManager = ProgressBarManager.getInstance();
+    const textureLoader = new THREE.TextureLoader();
+
+    const envMap = textureLoader.load(
+      "assets/textures/Gaia_EDR3_darkened.png",
+      () => {
+        progressBarManager.updateProgress(10, "Loading background map...");
+      }
     );
+    envMap.mapping = THREE.EquirectangularReflectionMapping;
+    this.scene.background = envMap;
+
+    this.earth = new Earth(10, 64);
     this.earth.addEarthToScene(this.scene);
-
-    const font = await this.loadFont("assets/fonts/Futury_Light_Regular.json");
-
-    const floatingTitle = new FloatingText("Hi there!", font);
-    floatingTitle.addFloatingTextToScene(
-      this.scene,
-      new THREE.Vector3(0, 15, 0)
-    );
-    const floatingSubtitle = new FloatingText(
-      "My name is Khoa, and welcome to my world!",
-      font
-    );
-    floatingSubtitle.addFloatingTextToScene(
-      this.scene,
-      new THREE.Vector3(0, 11, 0)
-    );
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableZoom = false;
-
-    for (let i = 0; i < NUM_OF_STARS; i++) {
-      const star = new Star();
-      star.addStarToScene(this.scene);
-    }
 
     this.clock = new THREE.Clock();
 
@@ -88,24 +67,23 @@ class Main {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
     });
-  }
 
-  async loadFont(src: string): Promise<Font> {
-    return new Promise((resolve, reject) => {
-      const loader = new FontLoader();
-      loader.load(
-        src,
-        (font) => {
-          resolve(font);
-        },
-        (event) => {
-          console.log("Loading font...", event);
-        },
-        (err) => {
-          console.error("An error occurred when loading the font:", err);
-          reject(err);
-        }
-      );
+    this.addSmoothScrolling();
+  }
+  addSmoothScrolling() {
+    const anchors = [].slice.call(
+      document.querySelectorAll('a[href^="#"]')
+    ) as HTMLAnchorElement[];
+    anchors.forEach((anchor) => {
+      const href = anchor.getAttribute("href");
+      if (href) {
+        anchor.addEventListener("click", (event) => {
+          event.preventDefault();
+          document
+            .querySelector(href)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
     });
   }
 

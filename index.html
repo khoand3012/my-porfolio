@@ -5,11 +5,22 @@
     <link rel="icon" type="image/svg+xml" href="assets/images/pizza.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khoa Nguyen's Home Page</title>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <section class="section" id="home">
+      <div class="loading-screen">
+        <label for="progress-bar">Loading...</label>
+        <progress id="progress-bar" value="0" max="100"></progress>
+      </div>
       <canvas id="bg"></canvas>
-      <div class="scroll">
+      <div class="title-container hidden">
+        <h1 class="title typewriter">Hi there!</h1>
+        <h2 class="subtitle typewriter">
+          My name is Khoa, and I'm a web developer.
+        </h2>
+      </div>
+      <a class="scroll hidden" href="#aboutme">
         Scroll down to continue
         <img
           src="assets/images/chevron-double-down.svg"
@@ -18,9 +29,124 @@
           width="24"
           class="chevron"
         />
-      </div>
+      </a>
     </section>
     <script type="module" src="/src/main.ts"></script>
-    <section class="section" id="aboutme"></section>
+    <section class="section" id="aboutme">
+      <div class="main-details">
+        <h1 class="aboutme-title">About me</h1>
+        <p class="aboutme-detail">
+          My name is Khoa and I'm from Hanoi, Vietnam. I have for 4+ years of
+          experience in professional software development - especially web
+          applications.
+        </p>
+        <p class="aboutme-detail">
+          I'm currently working at Niteco as a Front-end developer.
+        </p>
+      </div>
+      <div class="tech-stack">
+        <h1 class="tech-stack-title">My tech stack</h1>
+        <div class="tech-stack-grid">
+          <a
+            class="tech-stack-cell"
+            target="_blank"
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+          >
+            <img
+              class="tech-stack-skill"
+              src="assets/images/javascript.svg"
+              alt=""
+            />
+            Javascript
+          </a>
+          <a class="tech-stack-cell" target="_blank" href="https://vuejs.org/">
+            <img
+              class="tech-stack-skill"
+              src="assets/images/vue.svg"
+              alt=""
+            />Vue
+          </a>
+          <a class="tech-stack-cell" target="_blank" href="https://nextjs.org/">
+            <img
+              class="tech-stack-skill"
+              src="assets/images/nextjs.svg"
+              alt=""
+            />NextJs
+          </a>
+          <a class="tech-stack-cell" target="_blank" href="https://react.dev/">
+            <img
+              class="tech-stack-skill"
+              src="assets/images/react.svg"
+              alt=""
+            />
+            React
+          </a>
+          <a
+            class="tech-stack-cell"
+            target="_blank"
+            href="https://nodejs.org/en"
+          >
+            <img
+              class="tech-stack-skill"
+              src="assets/images/nodejs.svg"
+              alt=""
+            />NodeJs
+          </a>
+          <a
+            class="tech-stack-cell"
+            target="_blank"
+            href="https://sass-lang.com/"
+          >
+            <img
+              class="tech-stack-skill"
+              src="assets/images/sass.svg"
+              alt=""
+            />Sass
+          </a>
+        </div>
+      </div>
+      <div class="picture-card">
+        <img
+          class="profile-picture"
+          src="assets/images/my-picture.jpg"
+          alt=""
+        />
+        <span class="my-name">Nguyen Duong Khoa</span>
+        <div class="link-container">
+          <a
+            class="social-media-link"
+            href="https://www.linkedin.com/in/khoand3012/"
+            ><img
+              class="social-media-icon"
+              src="assets/images/linkedin.svg"
+              alt="linkedin"
+              srcset=""
+          /></a>
+          <a class="social-media-link" href="https://github.com/khoand3012"
+            ><img
+              class="social-media-icon"
+              src="assets/images/github.svg"
+              alt="github"
+              srcset=""
+            />
+          </a>
+          <a
+            class="social-media-link"
+            href="https://www.facebook.com/stefanofleuranza"
+            ><img
+              class="social-media-icon"
+              src="assets/images/facebook.svg"
+              alt="facebook"
+              srcset=""
+            />
+          </a>
+        </div>
+        <p class="my-about">
+          A Front-end software engineer specializes in building modern web
+          applications that don't just look great - they perform beautifully
+          too.
+        </p>
+      </div>
+    </section>
   </body>
 </html>

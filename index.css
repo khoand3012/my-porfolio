@@ -1,0 +1,269 @@
+@font-face {
+  font-family: "FuturyLight";
+  src: url("assets/fonts/FuturyLight-MAOLv.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes move-down {
+  from {
+    top: 0;
+  }
+  to {
+    top: 5px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body,
+#bg {
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-family: "FuturyLight", serif;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+#bg {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.section {
+  max-width: 100vw;
+  background-color: black;
+}
+
+#home {
+  overflow: hidden;
+}
+
+.title-container {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 99;
+}
+
+.title {
+  opacity: 0;
+  animation: 1.5s ease-in 0s fade-in forwards;
+  font-size: 2rem;
+  text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.9);
+}
+
+.subtitle {
+  font-size: 1rem;
+  max-width: 70vw;
+  opacity: 0;
+  animation: 1.5s ease-in 1.5s fade-in forwards;
+  text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.9);
+}
+
+.scroll {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  z-index: 99;
+  padding: 2rem;
+  border-radius: 1rem;
+  color: white;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  left: 50%;
+  transform: translate(-50%);
+  cursor: pointer;
+}
+
+.chevron {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  animation: 0.7s ease-in 1s infinite move-down;
+}
+
+.loading-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+#progress-bar {
+  width: 30%;
+  margin-top: 0.5%;
+  height: 2%;
+}
+
+label[for="progress-bar"] {
+  color: white;
+  font-size: 2rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#aboutme {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.main-details {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  order: 1;
+}
+
+.picture-card {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  order: 0;
+  gap: 16px;
+  color: black;
+}
+
+.profile-picture {
+  padding: 32px;
+  width: 80%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.my-name {
+  font-size: 24px;
+}
+
+.my-about {
+  font-size: 16px;
+  padding: 0 32px;
+}
+
+.link-container {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.social-media-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-media-icon {
+  height: 48px;
+  width: 48px;
+  transition: all 0.2s ease;
+}
+
+.tech-stack {
+  order: 3;
+}
+
+.social-media-icon:hover {
+  transform: scale(1.4);
+}
+
+.tech-stack-grid {
+  align-self: baseline;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tech-stack-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  background-color: #1e1b4bb3;
+  padding: 16px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease-in;
+}
+
+.tech-stack-cell:hover {
+  background-color: #1e1b4b;
+  transform: scale(1.05);
+}
+
+.tech-stack-skill {
+  width: 80px;
+  height: 80px;
+}
+
+@media only screen and (max-width: 1023px) {
+  #aboutme {
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .title-container {
+    left: 10%;
+    transform: translate(-10%);
+  }
+  .title {
+    font-size: 5rem;
+  }
+  .subtitle {
+    font-size: 2rem;
+  }
+
+  #aboutme {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-rows: repeat(5, 200px);
+  }
+
+  .picture-card {
+    grid-row-start: 2;
+    grid-column-start: 3;
+    grid-row-end: 5;
+    width: 50%;
+    margin: 0;
+  }
+
+  .tech-stack {
+    grid-row-start: 3;
+    grid-row-end: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    grid-column-start: 2;
+  }
+}
