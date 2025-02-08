@@ -17,7 +17,6 @@ class Main {
     this.init();
   }
   async init() {
-    this.initialScroll();
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
       75,
@@ -98,10 +97,6 @@ class Main {
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.animate.bind(this));
-  }
-
-  initialScroll() {
-    document.body.style.overflow = "hidden";
   }
 }
 

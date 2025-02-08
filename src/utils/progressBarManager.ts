@@ -119,6 +119,5 @@ export default class ProgressBarManager {
     this.loadingScreen.classList.add("hidden");
     this.titleContainer.classList.remove("hidden");
     this.scroll.classList.remove("hidden");
-    document.body.style.overflow = "auto";
   }
 }

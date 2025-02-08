@@ -133,7 +133,6 @@ label[for="progress-bar"] {
 #aboutme {
   display: flex;
   flex-direction: column;
-  padding: 24px;
 }
 
 .main-details {
@@ -229,6 +228,7 @@ label[for="progress-bar"] {
 @media only screen and (max-width: 1023px) {
   #aboutme {
     align-items: center;
+    padding: 24px;
   }
 }
 
@@ -263,7 +263,7 @@ label[for="progress-bar"] {
     grid-row-end: 5;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     grid-column-start: 2;
   }
 }
