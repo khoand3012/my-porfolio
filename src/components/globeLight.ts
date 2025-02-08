@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export default class GlobeLight {
+export class GlobeLight {
   private sunLight: THREE.DirectionalLight;
   private ambientLight: THREE.AmbientLight;
   constructor(

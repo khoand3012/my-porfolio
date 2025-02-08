@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export default class Star {
+export class Star {
   geometry: THREE.SphereGeometry;
   material: THREE.MeshStandardMaterial;
   constructor() {

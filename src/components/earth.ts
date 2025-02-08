@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import vertexShader from "../shaders/vertex.glsl";
 import fragmentShader from "../shaders/fragment.glsl";
-import ProgressBarManager from "../utils/progressBarManager";
+import { ProgressBarManager } from "../utils/progressBarManager";
 
 interface IEarthMappings {
   albedoMap: THREE.Texture;
@@ -20,7 +20,7 @@ const params = {
   atmMultiplier: { value: 9.5 },
 };
 
-export default class Earth {
+export class Earth {
   private radius: number;
   private segments: number;
   private earth!: THREE.Mesh;

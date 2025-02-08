@@ -4,7 +4,7 @@ type ProgressTask = {
   message: string;
 };
 
-export default class ProgressBarManager {
+export class ProgressBarManager {
   private static _instance: ProgressBarManager | null = null;
 
   private scroll: HTMLDivElement;

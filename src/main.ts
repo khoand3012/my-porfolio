@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import GlobeLight from "./components/globeLight";
-import Earth from "./components/earth";
-import ProgressBarManager from "./utils/progressBarManager";
+import { GlobeLight } from "./components/globeLight";
+import { Earth } from "./components/earth";
+import { ProgressBarManager } from "./utils/progressBarManager";
 
 class Main {
   scene!: THREE.Scene;
