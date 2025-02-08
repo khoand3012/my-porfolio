@@ -1,6 +1,6 @@
 @font-face {
   font-family: "FuturyLight";
-  src: url("assets/fonts/FuturyLight-MAOLv.woff") format("woff");
+  src: url("/assets/fonts/FuturyLight-MAOLv.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
