@@ -9,6 +9,7 @@
   from {
     top: 0;
   }
+
   to {
     top: 5px;
   }
@@ -18,6 +19,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -118,7 +120,18 @@ a:visited {
 #progress-bar {
   width: 30%;
   margin-top: 0.5%;
-  height: 2%;
+  height: 50px;
+  border: 2px solid white;
+  box-sizing: border-box;
+}
+
+#progress-bar::-webkit-progress-bar {
+  background-color: transparent;
+  padding: 3px;
+}
+
+#progress-bar::-webkit-progress-value {
+  background-color: #d3d3d3;
 }
 
 label[for="progress-bar"] {
@@ -130,7 +143,7 @@ label[for="progress-bar"] {
   display: none !important;
 }
 
-#aboutme {
+.info-page {
   display: flex;
   flex-direction: column;
 }
@@ -226,7 +239,8 @@ label[for="progress-bar"] {
 }
 
 @media only screen and (max-width: 1023px) {
-  #aboutme {
+  .info-page {
+    gap: 32px;
     align-items: center;
     padding: 24px;
   }
@@ -237,25 +251,31 @@ label[for="progress-bar"] {
     left: 10%;
     transform: translate(-10%);
   }
+
   .title {
     font-size: 5rem;
   }
+
   .subtitle {
     font-size: 2rem;
   }
 
-  #aboutme {
+  .info-page {
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
     grid-template-rows: repeat(5, 200px);
+  }
+
+  .info-page#experience {
+    grid-template-rows: repeat(6, 200px);
   }
 
   .picture-card {
     grid-row-start: 2;
     grid-column-start: 3;
     grid-row-end: 5;
-    width: 50%;
-    margin: 0;
+    width: 60%;
+    margin-right: 0;
   }
 
   .tech-stack {
@@ -270,21 +290,172 @@ label[for="progress-bar"] {
 
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
-  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.44, rgb(122, 153, 217)),
-    color-stop(0.72, rgb(73, 125, 189)),
-    color-stop(0.86, rgb(28, 58, 148))
-  );
+  background-image: -webkit-gradient(linear,
+      left bottom,
+      left top,
+      color-stop(0.44, #7a99d9),
+      color-stop(0.72, #497dbd),
+      color-stop(0.86, #1c3a94));
+}
+
+.experience-title {
+  grid-row-start: 1;
+  grid-column-start: 2;
+  margin: auto 0;
+}
+
+.timeline {
+  grid-row-start: 2;
+  grid-row-end: 6;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  width: 100%;
+  height: fit-content;
+  position: relative;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: white;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.time-container {
+  padding: 12px 36px;
+  position: relative;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.time-container::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: -17px;
+  background-color: white;
+  border: 4px solid #1c3a94;
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  left: 50%;
+}
+
+.right::after {
+  left: -16px;
+}
+
+.left::before,
+.right::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  border: medium solid white;
+}
+
+.left::before {
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent #1e1b4bb3;
+  right: 26px;
+
+}
+
+.right::before {
+  border-width: 10px 10px 10px 0;
+  border-color: transparent #1e1b4bb3 transparent transparent;
+  left: 26px;
+
+}
+
+.time-content {
+  padding: 20px 30px;
+  background-color: white;
+  position: relative;
+  border-radius: 6px;
+  background-color: #1e1b4bb3;
+}
+
+
+.timeline-picture {
+  height: 40px;
+  object-fit: cover;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.white-bg-img {
+  background-color: white;
+  padding: 6px;
+}
+
+
+/* Media queries - Responsive timeline on screens less than 767px wide */
+@media screen and (max-width: 767px) {
+
+  /* Place the timelime to the left */
+  .timeline::after {
+    left: 31px;
+  }
+
+  /* Full-width containers */
+  .time-container {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+
+  /* Make sure that all arrows are pointing leftwards */
+  .time-container::before {
+    left: 60px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #1e1b4bb3 transparent transparent;
+  }
+
+  /* Make sure all circles are at the same spot */
+  .left::after,
+  .right::after {
+    left: 15px;
+  }
+
+  /* Make all right containers behave like the left ones */
+  .right {
+    left: 0%;
+  }
+
+  #progress-bar {
+    width: 80%;
+  }
+
+  label[for="progress-bar"] {
+    font-size: 1rem;
+  }
+
+  .loading-screen {
+    gap: 8px;
+  }
 }
