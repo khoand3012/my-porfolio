@@ -1,6 +1,13 @@
-@font-face {
+/* @font-face {
   font-family: "FuturyLight";
   src: url("/assets/fonts/FuturyLight-MAOLv.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/assets/fonts/Gilroy-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -30,7 +37,8 @@ body,
   color: white;
   margin: 0;
   padding: 0;
-  font-family: "FuturyLight", serif;
+  /* font-family: "FuturyLight", serif; */
+  font-family: Gilroy, Segoe UI, sans-serif;
 }
 
 a,
