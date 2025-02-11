@@ -4,7 +4,7 @@ import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { GlobeLight } from "./components/globeLight";
 import { Earth } from "./components/earth";
 import { ProgressBarManager } from "./utils/progressBarManager";
-import WebGL from 'three/addons/capabilities/WebGL.js';
+import WebGL from "three/addons/capabilities/WebGL.js";
 class Main {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -15,12 +15,62 @@ class Main {
   subtitleText!: THREE.Mesh;
   earth!: Earth;
   constructor() {
+    this.addSmoothScrolling();
+    this.addModalControls();
+    this.addFormControls();
     if (WebGL.isWebGL2Available()) {
       this.render3dScene();
     } else {
-      const homeScreen = document.querySelector('section#home') as HTMLElement;
-      homeScreen.classList.add('with-background');
+      const loadingScreen = document.querySelector(
+        ".loading-screen"
+      ) as HTMLDivElement;
+      loadingScreen.classList.add("hidden");
+      const homeScreen = document.querySelector("section#home") as HTMLElement;
+      homeScreen.classList.add("with-background");
     }
+  }
+  addFormControls() {
+    const form = document.querySelector(
+      "form.contact-me-form"
+    ) as HTMLFormElement;
+    const submitBtn = document.querySelector(
+      ".btn-submit"
+    ) as HTMLButtonElement;
+
+    if (form && submitBtn) {
+      submitBtn.addEventListener("click", (event) => {
+        if (!(event.target as HTMLFormElement).checkValidity()) {
+          (event.target as HTMLFormElement).reportValidity();
+          return;
+        }
+        event.preventDefault();
+        alert("Thanks for reaching out. Looking forward to seeing you soon!");
+      });
+    }
+  }
+  addModalControls() {
+    const modalButtons = [].slice.call(
+      document.querySelectorAll(".modal-btn")
+    ) as HTMLButtonElement[];
+
+    modalButtons.forEach((modalButton) => {
+      modalButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const target = modalButton.dataset.target;
+        const modal = document.querySelector(
+          `dialog#${target}`
+        ) as HTMLDialogElement;
+        if (modal) {
+          modal.showModal();
+          document.body.style.overflow = "hidden";
+          if (!modal.onclose) {
+            modal.onclose = () => {
+              document.body.style.overflow = "auto";
+            };
+          }
+        }
+      });
+    });
   }
   async render3dScene() {
     this.scene = new THREE.Scene();
@@ -73,8 +123,6 @@ class Main {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
     });
-
-    this.addSmoothScrolling();
   }
   addSmoothScrolling() {
     const anchors = [].slice.call(
