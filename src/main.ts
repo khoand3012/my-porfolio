@@ -1,9 +1,10 @@
+"use strict";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { GlobeLight } from "./components/globeLight";
 import { Earth } from "./components/earth";
 import { ProgressBarManager } from "./utils/progressBarManager";
-
+import WebGL from 'three/addons/capabilities/WebGL.js';
 class Main {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -14,9 +15,14 @@ class Main {
   subtitleText!: THREE.Mesh;
   earth!: Earth;
   constructor() {
-    this.init();
+    if (WebGL.isWebGL2Available()) {
+      this.render3dScene();
+    } else {
+      const homeScreen = document.querySelector('section#home') as HTMLElement;
+      homeScreen.classList.add('with-background');
+    }
   }
-  async init() {
+  async render3dScene() {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
       75,
@@ -52,7 +58,7 @@ class Main {
     envMap.mapping = THREE.EquirectangularReflectionMapping;
     this.scene.background = envMap;
 
-    this.earth = new Earth(10, 64);
+    this.earth = new Earth(10, 32);
     this.earth.addEarthToScene(this.scene);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
