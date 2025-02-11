@@ -5,6 +5,10 @@ import { GlobeLight } from "./components/globeLight";
 import { Earth } from "./components/earth";
 import { ProgressBarManager } from "./utils/progressBarManager";
 import WebGL from "three/addons/capabilities/WebGL.js";
+import { Resend } from "resend";
+
+const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+
 class Main {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -38,13 +42,22 @@ class Main {
     ) as HTMLButtonElement;
 
     if (form && submitBtn) {
+      const formData = new FormData(form);
       submitBtn.addEventListener("click", (event) => {
         if (!(event.target as HTMLFormElement).checkValidity()) {
           (event.target as HTMLFormElement).reportValidity();
-          return;
+        } else {
+          event.preventDefault();
+          resend.emails.send({
+            from: formData.get("email")?.toString() || "",
+            to: "aaronfebruary95@gmail.com",
+            subject: `${formData.get("name")?.toString()} ${
+              formData.get("telephone")?.toString() || ""
+            }`,
+            html: formData.get("message")?.toString() || "",
+          });
+          alert("Thanks for reaching out. Looking forward to seeing you soon!");
         }
-        event.preventDefault();
-        alert("Thanks for reaching out. Looking forward to seeing you soon!");
       });
     }
   }
