@@ -40,33 +40,70 @@ class Main {
       ".btn-submit"
     ) as HTMLButtonElement;
 
+    const nameInput = document.querySelector(
+      "input#name-input"
+    ) as HTMLInputElement;
+    const emailInput = document.querySelector(
+      "input#email-input"
+    ) as HTMLInputElement;
+    const messageInput = document.querySelector(
+      "textarea#message-input"
+    ) as HTMLTextAreaElement;
+
+    const inputFields = [nameInput, emailInput, messageInput];
+
+    inputFields.forEach((input) => {
+      input.addEventListener("change", () => {
+        input.classList.remove("error-input");
+      });
+    });
+
     if (form && submitBtn) {
       submitBtn.addEventListener("click", (event) => {
+        event.preventDefault();
         const formData = new FormData(form);
         const name = formData.get("name")?.toString();
         const email = formData.get("email")?.toString();
         const telephone = formData.get("telephone")?.toString();
         const message = formData.get("message")?.toString();
 
-        if (!(event.target as HTMLFormElement).checkValidity()) {
-          (event.target as HTMLFormElement).reportValidity();
-        } else {
-          event.preventDefault();
-          if (MESSAGING_API_ENDPOINT) {
-            fetch(MESSAGING_API_ENDPOINT, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ name, email, telephone, message }),
-            }).then(() => {
-              form.reset();
-            });
-          } else {
-            console.error("MESSAGING_API_ENDPOINT not configured!");
-          }
-          alert("Thanks for reaching out. Looking forward to seeing you soon!");
+        let firstErrorInput: HTMLInputElement | HTMLTextAreaElement | null =
+          null;
+
+        if (!name) {
+          nameInput.classList.add("error-input");
+          firstErrorInput = nameInput;
         }
+        if (!email) {
+          emailInput.classList.add("error-input");
+          if (!firstErrorInput) firstErrorInput = emailInput;
+        }
+        if (!message) {
+          messageInput.classList.add("error-input");
+          if (!firstErrorInput) firstErrorInput = messageInput;
+        }
+        if (firstErrorInput) {
+          this.showToast("Please fill in the required fields.", "error");
+          firstErrorInput.focus();
+          return;
+        }
+        if (MESSAGING_API_ENDPOINT) {
+          fetch(MESSAGING_API_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email, telephone, message }),
+          }).then(() => {
+            form.reset();
+          });
+        } else {
+          console.error("MESSAGING_API_ENDPOINT not configured!");
+        }
+        this.showToast(
+          "Thanks for reaching out. Looking forward to seeing you soon!",
+          "success"
+        );
       });
     }
   }
@@ -173,6 +210,23 @@ class Main {
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.animate.bind(this));
+  }
+
+  showToast(message: string, type: "success" | "error", timeout = 3000) {
+    const toast = document.querySelector(".toast");
+    if (toast) {
+      const toastContent = toast.querySelector(
+        ".toast-content"
+      ) as HTMLDivElement;
+      toastContent.innerHTML = message;
+      toast.classList.add("show", type);
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          toast.classList.remove("show");
+          toast.classList.remove(type);
+        });
+      }, timeout);
+    }
   }
 }
 

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
+    <div class="toast">
+      <div class="toast-content"></div>
+      <div class="toast-progress"></div>
+    </div>
     <section class="section" id="home">
       <div class="loading-screen">
         <label for="progress-bar">Loading...</label>
@@ -271,7 +275,7 @@
       <div class="contact-me-container">
         <h4>Swing by for a cup of coffee, or leave me a message:</h4>
         <form class="contact-me-form">
-          <label for="name" aria-required="true">Your name</label>
+          <label for="name" aria-required="true">Your name(*)</label>
           <input
             type="text"
             name="name"
@@ -279,7 +283,7 @@
             minlength="1"
             required
           />
-          <label for="email" aria-required="true">Your Email</label>
+          <label for="email" aria-required="true">Your Email(*)</label>
           <input
             type="email"
             name="email"
@@ -289,7 +293,7 @@
           />
           <label for="telephone">Your telephone number</label>
           <input type="tel" name="telephone" id="telephone-input" />
-          <label for="message">Your message</label>
+          <label for="message">Your message(*)</label>
           <textarea
             name="message"
             id="message-input"
