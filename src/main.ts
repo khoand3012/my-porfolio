@@ -21,6 +21,7 @@ class Main {
     this.addSmoothScrolling();
     this.addModalControls();
     this.addFormControls();
+    this.addScrollTopControls();
     if (WebGL.isWebGL2Available()) {
       this.render3dScene();
     } else {
@@ -30,6 +31,30 @@ class Main {
       loadingScreen.classList.add("hidden");
       const homeScreen = document.querySelector("section#home") as HTMLElement;
       homeScreen.classList.add("with-background");
+    }
+  }
+  addScrollTopControls() {
+    const btnScrollTop = document.querySelector(
+      "button.btn-scroll-top"
+    ) as HTMLButtonElement;
+    if (btnScrollTop) {
+      window.onscroll = () => {
+        if (
+          document.body.scrollTop > 100 ||
+          document.documentElement.scrollTop > 100
+        ) {
+          btnScrollTop.classList.remove("hidden");
+        } else {
+          btnScrollTop.classList.add("hidden");
+        }
+      };
+
+      btnScrollTop.addEventListener("click", (event) => {
+        event.preventDefault();
+        document
+          .querySelector(`section#home`)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
     }
   }
   addFormControls() {

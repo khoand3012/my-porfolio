@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="image_src" href="/assets/images/me.jpg">
+    <link rel="image_src" href="/assets/images/me.jpg" />
     <link rel="icon" type="image/svg+xml" href="/assets/images/coding.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khoa Nguyen's Home Page</title>
@@ -13,6 +13,10 @@
       <div class="toast-content"></div>
       <div class="toast-progress"></div>
     </div>
+    <button class="btn-light btn-scroll-top hidden">
+      <div class="up-chevron"></div>
+      Scroll to top
+    </button>
     <section class="section" id="home">
       <div class="loading-screen">
         <label for="progress-bar">Loading...</label>
@@ -20,11 +24,17 @@
       </div>
       <canvas id="bg"></canvas>
       <div class="title-container hidden">
-        <h1 class="title typewriter">Hi there!</h1>
-        <h2 class="subtitle typewriter">
-          My name is Khoa, and I'm a web developer.
-        </h2>
+        <h1 class="title">Hi there!</h1>
+        <h2 class="subtitle">My name is Khoa, and I'm a web developer.</h2>
       </div>
+      <a
+        class="source-container hidden"
+        href="https://github.com/khoand3012/my-porfolio"
+        target="_blank"
+      >
+        <img src="/assets/images/github-mark-white.svg" alt="github link" />
+        <h4>See the source code</h4>
+      </a>
       <a class="scroll hidden" href="#aboutme">
         Scroll down to continue
         <img
@@ -118,13 +128,17 @@
           <a
             class="social-media-link"
             href="https://www.linkedin.com/in/khoand3012/"
+            target="_blank"
             ><img
               class="social-media-icon"
               src="assets/images/linkedin.svg"
               alt="linkedin"
               srcset=""
           /></a>
-          <a class="social-media-link" href="https://github.com/khoand3012"
+          <a
+            class="social-media-link"
+            href="https://github.com/khoand3012"
+            target="_blank"
             ><img
               class="social-media-icon"
               src="assets/images/github.svg"
@@ -135,6 +149,7 @@
           <a
             class="social-media-link"
             href="https://www.facebook.com/stefanofleuranza"
+            target="_blank"
             ><img
               class="social-media-icon"
               src="assets/images/facebook.svg"
@@ -142,7 +157,10 @@
               srcset=""
             />
           </a>
-          <a class="social-media-link" href="mailto:aaronfebruary95@gmail.com"
+          <a
+            class="social-media-link"
+            href="mailto:aaronfebruary95@gmail.com"
+            target="_blank"
             ><img
               class="social-media-icon"
               src="assets/images/gmail.svg"

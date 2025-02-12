@@ -12,6 +12,7 @@ export class ProgressBarManager {
   private loadingScreen: HTMLDivElement;
   private progressBar: HTMLProgressElement;
   private loadingMessage: HTMLLabelElement;
+  private sourceText: HTMLDivElement;
 
   private taskQueue: ProgressTask[];
   private isProcessing: boolean;
@@ -31,6 +32,9 @@ export class ProgressBarManager {
     this.loadingMessage = document.querySelector(
       'label[for="progress-bar"]'
     ) as HTMLLabelElement;
+    this.sourceText = document.querySelector(
+      ".source-container"
+    ) as HTMLDivElement;
     this.scroll = document.querySelector(".scroll") as HTMLDivElement;
     this.progressBar.value = 0;
     this.taskCompletionCallbacks = new Map();
@@ -119,5 +123,6 @@ export class ProgressBarManager {
     this.loadingScreen.classList.add("hidden");
     this.titleContainer.classList.remove("hidden");
     this.scroll.classList.remove("hidden");
+    this.sourceText.classList.remove("hidden");
   }
 }
