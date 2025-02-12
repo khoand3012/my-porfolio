@@ -28,7 +28,7 @@
 
 @keyframes toastFadeIn {
   0% {
-    transform: translateX(110%);
+    transform: translateX(100%);
   }
 
   100% {
@@ -45,7 +45,7 @@
 
   100% {
     opacity: 0;
-    transform: translateX(110%);
+    transform: translateX(100%);
   }
 }
 
@@ -589,15 +589,16 @@ footer div {
 
 .toast {
   visibility: hidden;
-  right: 0;
+  right: 5px;
   color: #fff;
   text-align: center;
   border-radius: 2px;
   padding: 16px;
   position: fixed;
-  z-index: 1;
-  bottom: 30px;
+  z-index: 100;
+  top: 30px;
   display: flex;
+  max-width: 90vw;
   flex-direction: column;
 }
 
@@ -616,8 +617,8 @@ footer div {
 
 .toast.show {
   visibility: visible;
-  -webkit-animation: toastFadeIn 0.5s, fadeOut 0.5s 2.5s;
-  animation: toastFadeIn 0.5s, fadeOut 0.5s 2.5s;
+  -webkit-animation: toastFadeIn 0.5s, toastFadeOut 0.5s 2.5s;
+  animation: toastFadeIn 0.5s, toastFadeOut 0.5s 2.5s;
 }
 
 .toast-progress {
@@ -711,6 +712,10 @@ textarea.error-input {
 
   .picture-card {
     gap: 8px;
+  }
+
+  footer {
+    font-size: 10px;
   }
 }
 
