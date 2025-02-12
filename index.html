@@ -106,12 +106,9 @@
       </div>
       <p class="and-more-text">And more...</p>
       <div class="picture-card">
-        <img
-          class="profile-picture"
-          src="assets/images/me.jpg"
-          alt=""
-        />
+        <img class="profile-picture" src="assets/images/me.jpg" alt="" />
         <span class="my-name">Nguyen Duong Khoa</span>
+        <span>Tel: (+84) 914510584</span>
         <div class="link-container">
           <a
             class="social-media-link"
@@ -150,13 +147,14 @@
           </a>
         </div>
         <p class="my-about">
-          A front-end software engineer who specializes in building modern, high-performing web
-          applications that are as beautiful as they are functional.
+          A front-end software engineer who specializes in building modern,
+          high-performing web applications that are as beautiful as they are
+          functional.
         </p>
       </div>
     </section>
     <section class="section info-page" id="experience">
-      <h1 class="experience-title">My education & work experience</h1>
+      <h1 class="block-title">My education & work experience</h1>
       <div class="timeline">
         <div class="time-container left">
           <div class="time-content">
@@ -173,6 +171,9 @@
               applications, utilising the latest micro-frontend technologies
               such as Next.js and Module Federation.
             </p>
+            <button class="btn-light" data-target="niteco">
+              Click to see my projects
+            </button>
           </div>
         </div>
         <div class="time-container right">
@@ -185,7 +186,13 @@
             <p class="bold">Toshiba Software Development Vietnam</p>
             <p>Dec 2020 - Oct 2022</p>
             <p>Software Engineer</p>
-            <p>Design and develop industrial-grade softwares used in various operations of the Toshiba Energy Systems & Solutions Corporation.</p>
+            <p>
+              Design and develop industrial-grade softwares used in various
+              operations of the Toshiba Energy Systems & Solutions Corporation.
+            </p>
+            <button class="btn-light" data-target="toshiba">
+              Click to see my projects
+            </button>
           </div>
         </div>
         <div class="time-container left">
@@ -198,7 +205,13 @@
             <p class="bold">Hoot.vn</p>
             <p>Nov 2019 - Oct 2020</p>
             <p>Javascript Developer</p>
-            <p>Full-stack development of a marketing & post scheduling assistant tool for social media marketers.</p>
+            <p>
+              Full-stack development of a marketing & post scheduling assistant
+              tool for social media marketers.
+            </p>
+            <button class="btn-light" data-target="hoot">
+              Click to see my projects
+            </button>
           </div>
         </div>
         <div class="time-container right">
@@ -216,7 +229,187 @@
         </div>
       </div>
     </section>
-    <section class="section projects" id="projects"></section>
+    <section class="section info-page" id="certifications">
+      <h1 class="block-title">My certifications</h1>
+      <div class="certification-block-container">
+        <div class="certification-block">
+          <img
+            src="/assets/images/optimizely_cert.png"
+            class="certification-picture"
+            alt=""
+          />
+          <div class="certification-text">
+            <h1>
+              <a
+                target="_blank"
+                href="https://www.credly.com/badges/2f01cb70-ba22-4547-8c37-dbd908ca7ed6/linked_in_profile"
+                >Optimizely Web Experimentation Expert</a
+              >
+            </h1>
+            <p>Issued Oct 3 2024</p>
+          </div>
+        </div>
+        <div class="certification-block">
+          <img
+            src="/assets/images/british_council_logo.jpg"
+            class="certification-picture"
+            alt=""
+          />
+          <div class="certification-text">
+            <h1>
+              <a target="_blank" href="#"
+                >IELTS Academic Test - Total score: 7.5</a
+              >
+            </h1>
+            <p>Issued Dec 2020</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section info-page" id="contact">
+      <h1 class="block-title">Contact me</h1>
+      <div class="contact-me-container">
+        <h4>Swing by for a cup of coffee, or leave me a message:</h4>
+        <form class="contact-me-form">
+          <label for="name" aria-required="true">Your name</label>
+          <input
+            type="text"
+            name="name"
+            id="name-input"
+            minlength="1"
+            required
+          />
+          <label for="email" aria-required="true">Your Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email-input"
+            minlength="1"
+            required
+          />
+          <label for="telephone">Your telephone number</label>
+          <input type="tel" name="telephone" id="telephone-input" />
+          <label for="message">Your message</label>
+          <textarea
+            name="message"
+            id="message-input"
+            rows="8"
+            minlength="1"
+            required
+          ></textarea>
+          <button class="btn-light btn-submit" type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
+
+    <dialog class="modal" id="niteco">
+      <div class="modal-content">
+        <form method="dialog" class="modal-header">
+          <button class="close-btn">
+            <img class="close-icon" src="/assets/images/close.svg" alt="" />
+          </button>
+        </form>
+        <h3><i>Levande Singapore</i></h3>
+        <ul>
+          <li>
+            Homepage: <a href="https://levande.com.sg">Levande Singapore</a>
+          </li>
+          <li>
+            Singapore's first appliance platform - a sub-brand of Electrolux
+          </li>
+          <li>Won the 2023 SBR Technology Excellence Awards</li>
+          <li>
+            A high-performance focused e-commerce project that integrates
+            seamlessly with various external systems
+          </li>
+          <li>Role: Front-end Developer</li>
+          <li>Technologies: Vue.js, EpiServer (Optimizely)</li>
+        </ul>
+        <h3><i>UI Base Library</i></h3>
+        <ul>
+          <li>
+            Development of the UI library of React components, used for
+            Electrolux EU and AEG e-commerce websites.
+          </li>
+          <li>
+            Utilises the latest technologies in micro-frontend development,
+            notably Next.js and Module Federation.
+          </li>
+          <li>Role: Front-end Developer</li>
+          <li>Technologies: Next.js, Storybook, React.js, Sass</li>
+        </ul>
+        <h3><i>Dynamic Yield/Optimizely</i></h3>
+        <ul>
+          <li>
+            Implement and develop A/B testing and personalization campaigns on
+            Electrolux & AEG brand sites.
+          </li>
+          <li>
+            Develop multiple personalization features & product recommendation
+            for the e-commerce sites.
+          </li>
+          <li>Role: Front-end Developer</li>
+          <li>
+            Technologies: React.js, Dynamic Yield, Optimizely Web
+            Experimentation
+          </li>
+        </ul>
+      </div>
+    </dialog>
+    <dialog class="modal" id="toshiba">
+      <div class="modal-content">
+        <form method="dialog" class="modal-header">
+          <button class="close-btn">
+            <img class="close-icon" src="/assets/images/close.svg" alt="" />
+          </button>
+        </form>
+        <h3><i>Power plant energy system</i></h3>
+        <ul>
+          <li>
+            Web-based application for overseeing and managing status of
+            equipment and processes of Toshiba's nuclear power plant
+          </li>
+          <li>Role: Full-stack developer</li>
+          <li>Technologies: React.js, Node.js, PostgreSQL</li>
+        </ul>
+        <h3><i>Railway station management system</i></h3>
+        <ul>
+          <li>
+            Web-based application for managing the status of underground train
+            station gates.
+          </li>
+          <li>Role: Front-end Developer</li>
+          <li>Technologies: Vue.js, JQuery</li>
+        </ul>
+      </div>
+    </dialog>
+    <dialog class="modal" id="hoot">
+      <div class="modal-content">
+        <form method="dialog" class="modal-header">
+          <button class="close-btn">
+            <img class="close-icon" src="/assets/images/close.svg" alt="" />
+          </button>
+        </form>
+        <h3><i>Hoot.com</i></h3>
+        <ul>
+          <li>Online marketing support & post scheduling tool on Facebook</li>
+          <li>Role: Full-stack developer</li>
+          <li>Technologies: Node.js, Vue.js, MongoDB, Puppeteer</li>
+        </ul>
+      </div>
+    </dialog>
+    <footer>
+      <span> © Nguyen Duong Khoa 2025 </span>
+      <div>
+        <span> Tel: <a href="tel:+84914510584">(+84) 914510584</a> </span>
+        <span>
+          Email:
+          <a href="mailto:aaronfebruary95@gmail.com"
+            >aaronfebruary95@gmail.com</a
+          >
+        </span>
+      </div>
+    </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
