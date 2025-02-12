@@ -6,6 +6,8 @@ import { Earth } from "./components/earth";
 import { ProgressBarManager } from "./utils/progressBarManager";
 import WebGL from "three/addons/capabilities/WebGL.js";
 
+const MESSAGING_API_ENDPOINT = import.meta.env.VITE_MESSAGING_API_ENDPOINT;
+
 class Main {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -40,10 +42,29 @@ class Main {
 
     if (form && submitBtn) {
       submitBtn.addEventListener("click", (event) => {
+        const formData = new FormData(form);
+        const name = formData.get("name")?.toString();
+        const email = formData.get("email")?.toString();
+        const telephone = formData.get("telephone")?.toString();
+        const message = formData.get("message")?.toString();
+
         if (!(event.target as HTMLFormElement).checkValidity()) {
           (event.target as HTMLFormElement).reportValidity();
         } else {
           event.preventDefault();
+          if (MESSAGING_API_ENDPOINT) {
+            fetch(MESSAGING_API_ENDPOINT, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name, email, telephone, message }),
+            }).then(() => {
+              form.reset();
+            });
+          } else {
+            console.error("MESSAGING_API_ENDPOINT not configured!");
+          }
           alert("Thanks for reaching out. Looking forward to seeing you soon!");
         }
       });
