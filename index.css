@@ -118,6 +118,7 @@ footer a:visited {
   gap: 8px;
   opacity: 0;
   animation: 1.5s ease-in 0s fade-in forwards;
+  color: #fff;
 }
 
 .source-container img {
