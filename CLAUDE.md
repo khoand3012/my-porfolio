@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Package manager is pnpm (`pnpm-lock.yaml`).
+Package manager is pnpm 11 (`pnpm-lock.yaml`, pinned via `packageManager`). Node >= 22.23.4 is required (Astro 7's minimum, declared in `engines`).
 
 ```bash
 pnpm dev        # Astro dev server
@@ -20,7 +20,7 @@ There is no linter. `pnpm build` (the `astro check` step) and `pnpm test` are th
 A single-page personal portfolio: Astro 7 (static output) + Tailwind 4 + TypeScript, with a lazily loaded three.js globe in the hero. Deployed on Vercel from `build` (`.vercel` is gitignored). `astro.config.mjs` sets `site` and `outDir: "build"` and registers `@tailwindcss/vite` and `vite-plugin-glsl`.
 
 - **Content** lives in `src/data/profile.ts` (name, headline, availability, contact links, work items, roles, skills, credentials). Change copy there, not in the components. Wording comes from the CV; do not invent numbers or claims.
-- **Page:** `src/pages/index.astro` composes `src/layouts/Base.astro` (head, meta, font preload) with `Nav`, `Hero`, `Work` (+ `WorkCard`), `Experience`, `Skills`, `Credentials`, `Contact`, `Footer`, `Toast`, `ScrollTop` from `src/components/`. Section ids are `#home #work #experience #skills #contact`; the nav is not sticky and has no hamburger.
+- **Page:** `src/pages/index.astro` composes `src/layouts/Base.astro` (head, meta, font preload) with `Nav`, `Hero`, `Work` (+ `WorkCard`), `Experience`, `Skills`, `Credentials`, `Contact`, `Footer`, `Toast`, `ScrollTop` from `src/components/`. Section ids are `#home #work #experience #skills #credentials #contact`; the nav is not sticky and has no hamburger.
 - **Styling:** `src/styles/global.css` defines the palette as Tailwind `@theme` tokens (`ink`, `snow`, `muted`, `amber`, `amber-ink`, `live`, `line`) and the Space Grotesk `@font-face`s. Use the tokens, not hex literals. The starfield is a CSS background in `Hero.astro` (the texture is optimised with `getImage`). Layout is mobile-first down to 320px with no horizontal scroll; respect `prefers-reduced-motion` (`motion-safe:` utilities).
 - **Globe:** `src/components/globe/Globe.astro` renders an empty `[data-globe]` div and, when idle and WebGL2 exists, dynamically imports `globeScene.ts` so `three` stays out of the initial script. If WebGL2 is missing or anything fails, the div is removed and the page (text, buttons, starfield) is unaffected. The canvas is transparent over the CSS starfield and must never block touch scrolling. `earth.ts` builds the sphere (albedo/bump/ocean/night lights via `onBeforeCompile`, which relies on the sun being the first directional light), clouds and an atmosphere shader (`src/shaders/*.glsl`). Neither Earth nor clouds spin on their own; the initial view is centred on Hanoi.
 - **Real-time sun:** `src/lib/solar.ts` computes the subsolar point from the UTC epoch (`getTime()` only, never local getters) and `toEarthVector` turns it into the light direction, so day/night matches the real current time. `globeLight.ts` wraps the sun and ambient lights.
