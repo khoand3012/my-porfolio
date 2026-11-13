@@ -29,7 +29,7 @@ export const profile = {
   name: "Nguyen Duong Khoa",
   headline: "Senior Frontend Engineer",
   description: "React · TypeScript · Accessible UI & Design Systems",
-  availability: "Freelance & full-time · remote or hybrid (VN)",
+  availability: "Freelance & full-time · remote (global) or hybrid (VN)",
   availabilityLong:
     "Open to freelance and full-time · remote (global) or hybrid (Vietnam)",
   summary:
