@@ -1,0 +1,97 @@
+---
+import type { WorkItem } from "../data/profile.ts";
+
+interface Props {
+  item: WorkItem;
+  featured?: boolean;
+}
+
+const { item, featured = false } = Astro.props;
+
+// The featured card sets Selless's result as type. The two phrases are the
+// CV's own wording, so fail the build if the bullet ever stops saying them.
+const before = "~15 minutes";
+const after = "under 30 seconds";
+if (featured && !item.bullets.some((b) => b.includes(`${before} to ${after}`))) {
+  throw new Error(
+    `WorkCard: featured item "${item.id}" no longer contains "${before} to ${after}".`,
+  );
+}
+
+const headingId = `work-${item.id}`;
+---
+
+{
+  featured ? (
+    <article
+      aria-labelledby={headingId}
+      class="grid gap-x-12 gap-y-8 rounded-2xl border border-line bg-ink/60 p-6 sm:p-9 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:p-12"
+    >
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-2">
+          <p class="text-muted">{item.company}</p>
+          <h3
+            id={headingId}
+            class="text-[clamp(1.75rem,4.5vw,2.75rem)] leading-[1.02] font-bold tracking-[-0.025em] text-balance"
+          >
+            {item.title}
+          </h3>
+          <p class="text-muted">{item.context}</p>
+        </div>
+
+        <p class="flex flex-col gap-1 border-l-2 border-amber pl-5">
+          <span class="text-muted">Incident recovery time, from</span>
+          <span class="text-[clamp(1.5rem,4vw,2.25rem)] leading-tight font-bold text-muted">
+            {before}
+          </span>
+          <span class="text-muted">to</span>
+          <span class="text-[clamp(2.5rem,9.5vw,4.75rem)] leading-[0.95] font-bold tracking-[-0.035em] text-amber">
+            {after}
+          </span>
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-7">
+        <ul role="list" class="flex max-w-[56ch] list-none flex-col gap-3.5 leading-relaxed text-snow">
+          {item.bullets.map((b) => (
+            <li class="relative pl-5 before:absolute before:top-[0.7em] before:left-0 before:h-px before:w-2.5 before:bg-amber">
+              {b}
+            </li>
+          ))}
+        </ul>
+        <div>
+          <ul role="list" aria-label="Tech" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+            {item.tech.map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </article>
+  ) : (
+    <article aria-labelledby={headingId} class="flex flex-col gap-4 border-t border-line pt-6">
+      <div class="flex flex-col gap-1">
+        <p class="text-sm text-muted">{item.company}</p>
+        <h3 id={headingId} class="text-xl leading-snug font-bold text-balance sm:text-2xl">
+          {item.title}
+        </h3>
+        <p class="text-muted">{item.context}</p>
+        {item.note && (
+          <p class="mt-1 self-start text-sm font-bold text-amber">{item.note}</p>
+        )}
+      </div>
+      <ul role="list" class="flex max-w-[56ch] list-none flex-col gap-2.5 leading-relaxed">
+        {item.bullets.map((b) => (
+          <li>{b}</li>
+        ))}
+      </ul>
+      <div class="mt-auto">
+        <ul role="list" aria-label="Tech" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+          {item.tech.map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  )
+}

@@ -1,0 +1,29 @@
+---
+import { nav, profile } from "../data/profile.ts";
+---
+
+<nav
+  aria-label="Primary"
+  class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1"
+>
+  <a
+    href="#home"
+    class="font-bold text-snow transition-colors hover:text-amber focus-visible:text-amber"
+  >
+    {profile.name}
+  </a>
+  <ul role="list" class="flex gap-x-4 text-[0.9375rem] sm:gap-x-7">
+    {
+      nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="text-muted transition-colors hover:text-amber focus-visible:text-amber"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

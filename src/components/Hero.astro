@@ -1,0 +1,121 @@
+---
+import { getImage } from "astro:assets";
+import starfieldSrc from "../assets/textures/starfield.png";
+import { profile } from "../data/profile.ts";
+import Nav from "./Nav.astro";
+import Globe from "./globe/Globe.astro";
+
+const starfield = await getImage({
+  src: starfieldSrc,
+  format: "webp",
+  width: 1920,
+  quality: 70,
+});
+---
+
+<section
+  id="home"
+  class="hero relative flex min-h-svh flex-col overflow-x-clip bg-ink px-5 pt-5 pb-12 sm:px-8 lg:px-12 lg:pb-16"
+  style={`background-image: url(${starfield.src})`}
+>
+  <div class="globe-slot absolute" aria-hidden="true">
+    <Globe />
+  </div>
+
+  <div class="relative z-10">
+    <Nav />
+  </div>
+
+  <div
+    class="copy relative z-10 flex max-w-xl flex-1 flex-col justify-end gap-5 sm:gap-6 lg:max-w-[32rem] lg:justify-center xl:max-w-xl"
+  >
+    <p
+      class="inline-flex items-start gap-2.5 self-start rounded-xl border border-line bg-ink/70 px-3.5 py-2 text-sm leading-snug text-snow sm:rounded-full sm:py-1.5"
+    >
+      <span
+        class="mt-[0.4em] size-2 shrink-0 rounded-full bg-live"
+        aria-hidden="true"></span>
+      <span class="text-balance">{profile.availability}</span>
+    </p>
+
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-[clamp(2.75rem,8vw,5.75rem)] leading-[0.92] font-bold tracking-[-0.035em] text-balance"
+      >
+        {profile.headline}
+      </h1>
+      <p class="text-lg text-snow sm:text-xl">{profile.description}</p>
+    </div>
+
+    <p class="max-w-[34rem] leading-relaxed text-muted">{profile.summary}</p>
+
+    <div class="flex flex-wrap gap-3">
+      <a
+        href={`mailto:${profile.email}`}
+        class="rounded-md bg-amber px-5 py-3 font-bold text-amber-ink transition-colors hover:bg-snow"
+      >
+        Email me
+      </a>
+      <a
+        href="#work"
+        class="rounded-md border border-line px-5 py-3 font-bold text-snow transition-colors hover:border-amber hover:text-amber"
+      >
+        See the work
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /*
+   * --size: the globe slot (the globe fills ~80% of it, the rest is
+   * atmosphere). --gx / --gy: the globe centre, measured from the hero's
+   * right and top edges. The starfield is an all-sky panorama that tiles
+   * seamlessly, so it is lined up to put the bright galactic core behind
+   * the globe and keep the text over the faint part of the sky.
+   */
+  .hero {
+    --size: min(100vw, 52svh);
+    --gx: calc(var(--size) * 0.28);
+    --gy: calc(3rem + var(--size) / 2);
+    --sky: max(100svh, 48rem);
+    background-size: auto var(--sky);
+    background-repeat: repeat;
+    /* The image's black sky would hide the ink colour; lift it to ink. */
+    background-blend-mode: lighten;
+    background-position:
+      right calc(var(--gx) - var(--sky))
+      top calc(var(--gy) - var(--sky) / 2);
+  }
+
+  /* Phones: smaller, top right, behind the copy and never interactive. */
+  .globe-slot {
+    width: var(--size);
+    height: var(--size);
+    top: calc(var(--gy) - var(--size) / 2);
+    right: calc(var(--gx) - var(--size) / 2);
+    pointer-events: none;
+  }
+
+  .copy {
+    /* Leave the upper part of the phone hero to the globe. */
+    padding-top: min(62vw, 32svh);
+  }
+
+  /* Desktop: large, vertically centred, bleeding off the right edge. */
+  @media (min-width: 64rem) {
+    .hero {
+      --size: min(64vw, 100svh, 72rem);
+      --gx: calc(var(--size) * 0.3);
+      --gy: 50svh;
+    }
+
+    .globe-slot {
+      pointer-events: auto;
+    }
+
+    .copy {
+      padding-top: 0;
+    }
+  }
+</style>

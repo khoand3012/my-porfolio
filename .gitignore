@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 
 .vercel
+
+.superpowers/
+.astro
+
+.env
+.env.local
+.env.*.local

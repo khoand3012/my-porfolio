@@ -1,0 +1,66 @@
+---
+// Lazy WebGL globe. The page is complete without it: this element starts
+// invisible, and is removed if WebGL2 is missing or anything fails.
+---
+
+<div
+  data-globe
+  class="h-full w-full opacity-0 data-ready:opacity-100 motion-safe:transition-opacity motion-safe:duration-[1600ms] motion-safe:ease-out"
+>
+</div>
+
+<script>
+  function hasWebGL2(): boolean {
+    try {
+      const gl = document.createElement("canvas").getContext("webgl2");
+      if (!gl) return false;
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function whenIdle(task: () => void): void {
+    const idle: typeof window.requestIdleCallback | undefined =
+      window.requestIdleCallback;
+    if (idle) idle.call(window, task, { timeout: 2000 });
+    else window.setTimeout(task, 200);
+  }
+
+  function start(el: HTMLElement): void {
+    if (!hasWebGL2()) {
+      el.remove();
+      return;
+    }
+
+    whenIdle(async () => {
+      let failed = false;
+      let dispose: (() => void) | undefined;
+      const fail = () => {
+        if (failed) return;
+        failed = true;
+        dispose?.();
+        el.remove();
+      };
+
+      try {
+        const { mountGlobe } = await import("./globeScene.ts");
+        const handle = await mountGlobe(el, {
+          onReady: () => {
+            if (!failed) el.dataset.ready = "";
+          },
+          // May run before mountGlobe resolves (renderer constructor threw).
+          onFail: fail,
+        });
+        dispose = handle.dispose;
+        if (failed) dispose();
+      } catch {
+        fail();
+      }
+    });
+  }
+
+  const el = document.querySelector<HTMLElement>("[data-globe]");
+  if (el) start(el);
+</script>
