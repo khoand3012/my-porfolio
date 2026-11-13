@@ -81,6 +81,8 @@ const starfield = await getImage({
     --sky: max(100svh, 48rem);
     background-size: auto var(--sky);
     background-repeat: repeat;
+    /* The image's black sky would hide the ink colour; lift it to ink. */
+    background-blend-mode: lighten;
     background-position:
       right calc(var(--gx) - var(--sky))
       top calc(var(--gy) - var(--sky) / 2);
