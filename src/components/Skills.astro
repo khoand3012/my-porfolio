@@ -1,0 +1,29 @@
+---
+import { skills } from "../data/profile.ts";
+---
+
+<section
+  id="skills"
+  aria-labelledby="skills-heading"
+  class="scroll-mt-6 px-5 py-20 sm:px-8 lg:px-12 lg:py-28"
+>
+  <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-14">
+    <h2
+      id="skills-heading"
+      class="text-[clamp(2.25rem,6vw,4rem)] leading-none font-bold tracking-[-0.03em]"
+    >
+      Skills
+    </h2>
+
+    <dl class="grid gap-x-10 gap-y-7 sm:grid-cols-2">
+      {
+        skills.map((g) => (
+          <div class="flex flex-col gap-1.5">
+            <dt class="font-bold">{g.label}</dt>
+            <dd class="leading-relaxed text-muted">{g.items.join(", ")}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

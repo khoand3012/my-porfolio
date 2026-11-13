@@ -1,0 +1,48 @@
+---
+import { education, experience } from "../data/profile.ts";
+
+const entries = [
+  ...experience.map((r) => ({
+    when: `${r.start} – ${r.end}`,
+    primary: r.title,
+    secondary: r.company,
+  })),
+  { when: education.end, primary: education.degree, secondary: education.school },
+];
+---
+
+<section
+  id="experience"
+  aria-labelledby="experience-heading"
+  class="scroll-mt-6 px-5 py-20 sm:px-8 lg:px-12 lg:py-28"
+>
+  <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-14">
+    <h2
+      id="experience-heading"
+      class="text-[clamp(2.25rem,6vw,4rem)] leading-none font-bold tracking-[-0.03em]"
+    >
+      Experience
+    </h2>
+
+    <ol class="relative flex flex-col gap-10 border-l border-line pl-7 sm:pl-9">
+      {
+        entries.map((e, i) => (
+          <li class="relative grid gap-1 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-x-8">
+            <span
+              class:list={[
+                "absolute top-[0.45em] -left-7 size-2.5 -translate-x-1/2 rounded-full sm:-left-9",
+                i === 0 ? "bg-amber" : "border border-line bg-ink",
+              ]}
+              aria-hidden="true"
+            />
+            <p class="text-muted tabular-nums sm:pt-0.5">{e.when}</p>
+            <div>
+              <h3 class="text-xl font-bold">{e.primary}</h3>
+              <p class="text-muted">{e.secondary}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
