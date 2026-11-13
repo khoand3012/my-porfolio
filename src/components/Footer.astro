@@ -1,0 +1,37 @@
+---
+import { profile } from "../data/profile.ts";
+
+const tel = profile.phone.replace(/[^\d+]/g, "");
+const year = new Date().getFullYear();
+const link =
+  "underline decoration-line decoration-2 underline-offset-4 transition-colors hover:text-amber hover:decoration-amber focus-visible:text-amber";
+---
+
+<footer class="border-t border-line px-5 pt-10 pb-24 sm:px-8 lg:px-12">
+  <div
+    class="mx-auto flex max-w-7xl flex-col gap-6 text-muted sm:flex-row sm:items-baseline sm:justify-between"
+  >
+    <p>&copy; {year} {profile.name}</p>
+    <ul class="flex flex-wrap gap-x-6 gap-y-2" role="list">
+      <li>
+        <a href={`mailto:${profile.email}`} class={link}>{profile.email}</a>
+      </li>
+      <li><a href={`tel:${tel}`} class={link}>{profile.phone}</a></li>
+      {
+        profile.links.map((l) => (
+          <li>
+            <a
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={link}
+            >
+              {l.label}
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
