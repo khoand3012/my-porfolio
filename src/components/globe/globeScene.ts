@@ -48,6 +48,7 @@ export async function mountGlobe(
 
   let ready = false;
   let failed = false;
+  let disposed = false;
   const manager = new THREE.LoadingManager();
   const earth = new Earth(EARTH_RADIUS, SEGMENTS, manager);
   const group = earth.getGroup();
@@ -62,7 +63,7 @@ export async function mountGlobe(
   group.rotation.set(HANOI.latDeg * DEG, -Math.PI / 2 - HANOI.lonDeg * DEG, 0);
 
   const render = () => {
-    if (ready) renderer.render(scene, camera);
+    if (ready && !disposed) renderer.render(scene, camera);
   };
 
   const updateSun = () => {
@@ -71,18 +72,19 @@ export async function mountGlobe(
   };
   updateSun();
   const interval = window.setInterval(() => {
+    if (disposed) return;
     updateSun();
     render();
   }, SUN_UPDATE_MS);
 
   manager.onError = () => {
-    if (failed) return;
+    if (failed || disposed) return;
     failed = true;
     opts.onFail();
   };
   manager.onLoad = () => {
     // LoadingManager also reaches onLoad after an error; ignore that case.
-    if (failed) return;
+    if (failed || disposed) return;
     ready = true;
     render();
     opts.onReady();
@@ -120,6 +122,8 @@ export async function mountGlobe(
 
   return {
     dispose: () => {
+      if (disposed) return;
+      disposed = true;
       window.clearInterval(interval);
       observer.disconnect();
       controls?.dispose();
