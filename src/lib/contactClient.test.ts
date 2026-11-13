@@ -72,6 +72,27 @@ test("success posts JSON with exactly the four keys", async () => {
   assert.deepEqual(body, valid);
 });
 
+test("sends trimmed values", async () => {
+  const { calls, fetchImpl } = stub({ ok: true, body: { success: true } });
+  await submitContact(
+    endpoint,
+    {
+      name: " Ada ",
+      email: " ada@example.com ",
+      telephone: " 123 ",
+      message: "\nHello\n",
+    },
+    fetchImpl,
+  );
+  const body = JSON.parse(String(calls[0]!.init?.body));
+  assert.deepEqual(body, {
+    name: "Ada",
+    email: "ada@example.com",
+    telephone: "123",
+    message: "Hello",
+  });
+});
+
 test("2xx without success:true is rejected", async () => {
   const { fetchImpl } = stub({ ok: true, body: {} });
   assert.deepEqual(await submitContact(endpoint, valid, fetchImpl), {

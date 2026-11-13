@@ -52,7 +52,7 @@ const headingId = `work-${item.id}`;
       </div>
 
       <div class="flex flex-col gap-7">
-        <ul class="flex max-w-[56ch] list-none flex-col gap-3.5 leading-relaxed text-snow">
+        <ul role="list" class="flex max-w-[56ch] list-none flex-col gap-3.5 leading-relaxed text-snow">
           {item.bullets.map((b) => (
             <li class="relative pl-5 before:absolute before:top-[0.7em] before:left-0 before:h-px before:w-2.5 before:bg-amber">
               {b}
@@ -60,7 +60,7 @@ const headingId = `work-${item.id}`;
           ))}
         </ul>
         <div>
-          <ul aria-label="Tech" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+          <ul role="list" aria-label="Tech" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
             {item.tech.map((t) => (
               <li>{t}</li>
             ))}
@@ -80,13 +80,13 @@ const headingId = `work-${item.id}`;
           <p class="mt-1 self-start text-sm font-bold text-amber">{item.note}</p>
         )}
       </div>
-      <ul class="flex max-w-[56ch] list-none flex-col gap-2.5 leading-relaxed">
+      <ul role="list" class="flex max-w-[56ch] list-none flex-col gap-2.5 leading-relaxed">
         {item.bullets.map((b) => (
           <li>{b}</li>
         ))}
       </ul>
       <div class="mt-auto">
-        <ul aria-label="Tech" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+        <ul role="list" aria-label="Tech" class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
           {item.tech.map((t) => (
             <li>{t}</li>
           ))}

@@ -42,10 +42,10 @@ export async function submitContact(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: payload.name,
-        email: payload.email,
-        telephone: payload.telephone,
-        message: payload.message,
+        name: payload.name.trim(),
+        email: payload.email.trim(),
+        telephone: payload.telephone.trim(),
+        message: payload.message.trim(),
       }),
     });
   } catch {

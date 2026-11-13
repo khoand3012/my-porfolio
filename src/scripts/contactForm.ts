@@ -74,11 +74,15 @@ if (form) {
       button.disabled = true;
       button.textContent = "Sending…";
     }
-    const result = await submitContact(endpoint, payload);
-    sending = false;
-    if (button) {
-      button.disabled = false;
-      button.textContent = "Send message";
+    let result;
+    try {
+      result = await submitContact(endpoint, payload);
+    } finally {
+      sending = false;
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Send message";
+      }
     }
 
     if (result.ok) {

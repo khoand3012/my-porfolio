@@ -18,6 +18,13 @@ const image = new URL("/assets/images/me.jpg", Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/space-grotesk-latin-400-normal.woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/svg+xml" href="/assets/images/coding.svg" />
     <link rel="canonical" href={url} />
     <meta property="og:type" content="website" />

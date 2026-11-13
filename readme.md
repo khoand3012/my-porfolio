@@ -1,12 +1,13 @@
 # My Portfolio
-This portfolio is written using Vite, Typescript and THREE.js.
 
-To build the project:
+A personal portfolio built with Astro, Tailwind CSS and TypeScript, with a
+lazily loaded three.js globe in the hero. See `CLAUDE.md` for the architecture.
+
 ```
-npm run build
+pnpm dev      # dev server
+pnpm build    # type-check and build to ./build
+pnpm preview  # serve the production build
+pnpm test     # unit tests for src/lib
 ```
 
-To run the project on a dev server:
-```
-npm run dev
-```
+Set `PUBLIC_MESSAGING_API_ENDPOINT` (see `.env.example`) for the contact form.
