@@ -33,6 +33,11 @@
         "(prefers-reduced-motion: reduce)",
       ).matches;
       window.scrollTo({ top: 0, behavior: calm ? "auto" : "smooth" });
+      // The button hides itself near the top; hand focus to the nav's name
+      // link so keyboard users are not dropped onto <body>.
+      document
+        .querySelector<HTMLElement>('nav a[href="#home"]')
+        ?.focus({ preventScroll: true });
     });
   }
 </script>

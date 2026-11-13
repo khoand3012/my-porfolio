@@ -70,7 +70,7 @@ export class Earth {
       metalness: params.metalness,
       metalnessMap: oceanMap,
       emissiveMap: lightsMap,
-      emissive: new THREE.Color(0xffff88),
+      emissive: new THREE.Color(0xffc070),
       emissiveIntensity: 1,
     });
 
